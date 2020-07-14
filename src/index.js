@@ -6,12 +6,9 @@ import api from './api';
 import store from './store';
 
 const main = function () {
-  api.getItems()
-  .then(res => res.json())
-  .then((items) => {
-    items.forEach((item) => store.addItem(item));
-    shoppingList.render(); // not calling the method, passing it 
-  }); 
+  api.getItems(store.errorReceiver)
+    .then((items) => { items.forEach((item) => store.addItem(item)); })
+    .finally(() => shoppingList.render());
   shoppingList.bindEventListeners();
   shoppingList.render();
 };
