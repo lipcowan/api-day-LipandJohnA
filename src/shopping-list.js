@@ -46,7 +46,7 @@ const render = function () {
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
 
-  const err = store.errorReceiver.lastError;
+  const err = store.error;
   $('#error-label').text(err ? err : '');
 };
 
@@ -56,8 +56,9 @@ const handleNewItemSubmit = function () {
     const newItemName = $('.js-shopping-list-entry').val();
     if(newItemName){
       $('.js-shopping-list-entry').val('');
-      api.createItem(newItemName, store.errorReceiver)
+      api.createItem(newItemName)
         .then(newItem => store.addItem(newItem))
+        .catch(err => store.error = err)
         .finally(() => render());
     }
   });
@@ -74,8 +75,9 @@ const handleDeleteItemClicked = function () {
   $('.js-shopping-list').on('click', '.js-item-delete', event => {
     // get the index of the item in store.items
     const id = getItemIdFromElement(event.currentTarget);
-    api.deleteItem(id, store.errorReceiver)
-      .then(() => store.findAndDelete(id, store.errorReceiver))
+    api.deleteItem(id)
+      .then(() => store.findAndDelete(id))
+      .catch(err => store.error = err)
       .finally(() => render());
   });
 };
@@ -86,8 +88,9 @@ const handleEditShoppingItemSubmit = function () {
     const id = getItemIdFromElement(event.currentTarget);
     const itemName = $(event.currentTarget).find('.shopping-item').val();
     const delta = {name:itemName};
-    api.updateItem(id, delta, store.errorReceiver)
-      .then(() => store.findAndUpdate(id,delta))
+    api.updateItem(id, delta)
+      .then(() => store.findAndUpdate(id, delta))
+      .catch(err => store.error = err)
       .finally(() => render());
   });
 };
@@ -96,8 +99,9 @@ const handleItemCheckClicked = function () {
   $('.js-shopping-list').on('click', '.js-item-toggle', event => {
     const id = getItemIdFromElement(event.currentTarget);
     const delta = {checked:!(store.findById(id).checked)};
-    api.updateItem(id, delta, store.errorReceiver)
-      .then(() => store.findAndUpdate(id,delta))
+    api.updateItem(id, delta)
+      .then(() => store.findAndUpdate(id, delta))
+      .catch(err => store.error = err)
       .finally(() => render());
   });
 };

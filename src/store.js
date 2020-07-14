@@ -23,7 +23,7 @@ const toggleCheckedFilter = function () {
   this.hideCheckedItems = !this.hideCheckedItems;
 };
 
-let errorReceiver = { lastError: null };
+let error = null;
 
 export default {
   items,
@@ -33,5 +33,5 @@ export default {
   findAndUpdate,
   findAndDelete,
   toggleCheckedFilter,
-  errorReceiver,
+  error,
 };
