@@ -11,7 +11,7 @@ const main = function () {
   .then((items) => {
     items.forEach((item) => store.addItem(item));
     shoppingList.render(); // not calling the method, passing it 
-  });
+  }); 
   shoppingList.bindEventListeners();
   shoppingList.render();
 };

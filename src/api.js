@@ -1,4 +1,4 @@
-export default {getItems, createItem};
+export default {getItems, createItem, updateItem};
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/lip';
 
@@ -12,7 +12,16 @@ function createItem(name) {
     return fetch(`${BASE_URL}/items`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newItem)
-    }
-    )
+        body: JSON.stringify(newItem)  //alternatively you could put ..stringify({name})
+    })
+}
+
+function updateItem(id, delta) {
+
+    return fetch(`${BASE_URL}/items/${id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(delta)
+    })
+
 }
