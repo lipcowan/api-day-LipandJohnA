@@ -1,4 +1,4 @@
-export default {getItems, createItem, updateItem};
+export default {getItems, createItem, updateItem, deleteItem};
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/lip';
 
@@ -24,4 +24,8 @@ function updateItem(id, delta) {
         body: JSON.stringify(delta)
     })
 
+}
+
+function deleteItem(id) {
+    return fetch(`${BASE_URL}/items/${id}`, {method:'DELETE'});
 }
