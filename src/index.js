@@ -6,8 +6,9 @@ import api from './api';
 import store from './store';
 
 const main = function () {
-  api.getItems(store.errorReceiver)
+  api.getItems()
     .then((items) => { items.forEach((item) => store.addItem(item)); })
+    .catch(err => store.error = err)
     .finally(() => shoppingList.render());
   shoppingList.bindEventListeners();
   shoppingList.render();
